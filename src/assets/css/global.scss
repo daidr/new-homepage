@@ -1,0 +1,12 @@
+@import "theme";
+
+* {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica,
+    Arial, PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif !important;
+}
+
+#app {
+  height: 100vh;
+  width: 100vw;
+}
