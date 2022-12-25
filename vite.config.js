@@ -20,7 +20,11 @@ export default defineConfig({
     }),
     WindiCSS(),
     {
-      ...visualizer(),
+      ...visualizer({
+        open: true,
+        gzipSize: true,
+        brotliSize: true,
+      }),
       apply: "build",
     },
   ],
