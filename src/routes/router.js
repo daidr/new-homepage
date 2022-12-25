@@ -1,0 +1,57 @@
+import * as VueRouter from "vue-router";
+import { usePageAttrStore } from "@/stores/pageAttrStore";
+
+const routeModules = import.meta.globEager("../pages/**/routes.js");
+
+const routes = [];
+
+let pageAttrStore;
+
+for (const element in routeModules) {
+  let routeModule = routeModules[element];
+  if (routeModule["routes"]) {
+    routes.push(...routeModule["routes"]);
+  }
+}
+
+const router = VueRouter.createRouter({
+  history: VueRouter.createWebHashHistory(),
+  routes,
+});
+
+const togglePageLoadingState = (() => {
+  let TIMER = null;
+  return (state) => {
+    if (state == 1) {
+      TIMER = setTimeout(() => {
+        pageAttrStore.setPageLoadingState(true);
+      }, 100);
+    } else if (state == 0) {
+      clearTimeout(TIMER);
+      pageAttrStore.setPageLoadingState(false);
+    } else {
+      clearTimeout(TIMER);
+    }
+  };
+})();
+
+router.beforeEach((to, from, next) => {
+  togglePageLoadingState(1);
+  next();
+});
+
+router.afterEach((to, from, failure) => {
+  if (!failure) {
+    window.document.title = `${to.meta.pageTitle} | 戴兜的小屋` || "戴兜的小屋";
+  }
+  if (!to.meta.asyncLoading) {
+    togglePageLoadingState(0);
+  } else {
+    togglePageLoadingState(2);
+  }
+});
+
+export const getRouter = () => {
+  pageAttrStore = usePageAttrStore();
+  return router;
+};
