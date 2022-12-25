@@ -1,4 +1,6 @@
 <script setup>
+import MessageContainer from '@/components/Message/MessageContainer.vue';
+
 const randomThemeIndex = Math.floor(Math.random() * 8) + 1
 document.body.classList.add(`theme-${randomThemeIndex}`)
 
@@ -6,32 +8,16 @@ document.body.classList.add(`theme-${randomThemeIndex}`)
 
 <template>
   <div class="main-wrapper">
-    <div class="block block-1"></div>
-    <div class="block block-2"></div>
-    <div class="block block-3"></div>
+    <RouterView v-slot="{ Component }">
+      <component :is="Component"></component>
+    </RouterView>
   </div>
+  <MessageContainer />
 </template>
 
 <style scoped lang="scss">
 .main-wrapper {
-  // @apply bg-primary;
+  @apply bg-primary-light;
   @apply h-screen;
-
-  .block {
-    @apply w-200px h-200px inline-block;
-    @apply bg-primary;
-
-    &.block-1 {
-      @apply bg-primary;
-    }
-
-    &.block-2 {
-      @apply bg-primary-light;
-    }
-
-    &.block-3 {
-      @apply bg-primary-extralight;
-    }
-  }
 }
 </style>
