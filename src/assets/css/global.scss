@@ -7,8 +7,7 @@
 }
 
 #app {
-  height: 100vh;
-  width: 100vw;
+  @apply fixed top-0 left-0 bottom-0 right-0;
   overflow: hidden;
 }
 
@@ -18,4 +17,22 @@
 
 ::selection {
   @apply bg-primary text-primary-extralight;
+}
+
+@keyframes backshake {
+  0% {
+    transform: rotate(8deg);
+  }
+  25% {
+    transform: rotate(-8deg);
+  }
+  50% {
+    transform: rotate(8deg);
+  }
+  75% {
+    transform: rotate(-8deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }
