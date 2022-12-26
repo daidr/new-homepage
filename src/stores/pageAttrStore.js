@@ -7,5 +7,25 @@ export const usePageAttrStore = defineStore("page-attr", () => {
     pageLoadingState.value = state;
   };
 
-  return { pageLoadingState, setPageLoadingState };
+  const pageHasLoadingState = ref(false);
+  const setPageHasLoadingState = (state) => {
+    pageHasLoadingState.value = state;
+  };
+
+  const routerWrapperSelector = ref(["", ""]);
+  const setRouterWrapperSelector = (from, to) => {
+    routerWrapperSelector.value = [
+      from.meta.calcContainer,
+      to.meta.calcContainer,
+    ];
+  };
+
+  return {
+    pageLoadingState,
+    setPageLoadingState,
+    pageHasLoadingState,
+    setPageHasLoadingState,
+    routerWrapperSelector,
+    setRouterWrapperSelector,
+  };
 });

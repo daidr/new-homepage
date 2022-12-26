@@ -21,22 +21,29 @@ const router = VueRouter.createRouter({
 
 const togglePageLoadingState = (() => {
   let TIMER = null;
-  return (state) => {
+  return (state, from, to) => {
     if (state == 1) {
       TIMER = setTimeout(() => {
+        // 一百毫秒后，如果页面还没有加载完毕，就显示加载动画
+        // 此时前页面缩小成加载动画的大小
+        pageAttrStore.setPageHasLoadingState(true);
         pageAttrStore.setPageLoadingState(true);
       }, 100);
     } else if (state == 0) {
+      // 清除页面加载计时器
       clearTimeout(TIMER);
-      pageAttrStore.setPageLoadingState(false);
-    } else {
-      clearTimeout(TIMER);
+      if (pageAttrStore.pageHasLoadingState.value) {
+        // 有加载动画
+        pageAttrStore.setPageLoadingState(false);
+      } else {
+        pageAttrStore.setPageHasLoadingState(false);
+      }
     }
   };
 })();
 
 router.beforeEach((to, from, next) => {
-  togglePageLoadingState(1);
+  // togglePageLoadingState(1, from, to);
   next();
 });
 
@@ -44,11 +51,7 @@ router.afterEach((to, from, failure) => {
   if (!failure) {
     window.document.title = `${to.meta.pageTitle} | 戴兜的小屋` || "戴兜的小屋";
   }
-  if (!to.meta.asyncLoading) {
-    togglePageLoadingState(0);
-  } else {
-    togglePageLoadingState(2);
-  }
+  // togglePageLoadingState(0, from, to);
 });
 
 export const getRouter = () => {
