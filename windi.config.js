@@ -16,6 +16,7 @@ export default defineConfig({
         primary: {
           extralight: withOpacityValue("--color-primary-extralight"),
           light: withOpacityValue("--color-primary-light"),
+          medium: withOpacityValue("--color-primary-medium"),
           DEFAULT: withOpacityValue("--color-primary"),
         },
         gray: {
