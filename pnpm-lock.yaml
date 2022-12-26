@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@iconify-json/icon-park-outline': ^1.1.7
   '@vitejs/plugin-vue': ^4.0.0
   pinia: ^2.0.28
   rollup-plugin-visualizer: ^5.8.3
@@ -17,6 +18,7 @@ dependencies:
   vue: registry.npmmirror.com/vue/3.2.45
 
 devDependencies:
+  '@iconify-json/icon-park-outline': registry.npmmirror.com/@iconify-json/icon-park-outline/1.1.7
   '@vitejs/plugin-vue': registry.npmmirror.com/@vitejs/plugin-vue/4.0.0_vite@4.0.3+vue@3.2.45
   pinia: registry.npmmirror.com/pinia/2.0.28_vue@3.2.45
   rollup-plugin-visualizer: registry.npmmirror.com/rollup-plugin-visualizer/5.8.3
@@ -323,6 +325,14 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  registry.npmmirror.com/@iconify-json/icon-park-outline/1.1.7:
+    resolution: {integrity: sha512-wQQ+CTY8ocgaxBBjn0fzCooZbRJ6crk1HYTlvM37aFTeVSlrKHbmq4thGxy6zkjFOvzi/w0GqgF4Kcpnor7syw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@iconify-json/icon-park-outline/-/icon-park-outline-1.1.7.tgz}
+    name: '@iconify-json/icon-park-outline'
+    version: 1.1.7
+    dependencies:
+      '@iconify/types': registry.npmmirror.com/@iconify/types/2.0.0
+    dev: true
 
   registry.npmmirror.com/@iconify/types/2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@iconify/types/-/types-2.0.0.tgz}

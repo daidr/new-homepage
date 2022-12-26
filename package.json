@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -12,6 +12,7 @@
     "vue": "^3.2.45"
   },
   "devDependencies": {
+    "@iconify-json/icon-park-outline": "^1.1.7",
     "@vitejs/plugin-vue": "^4.0.0",
     "pinia": "^2.0.28",
     "rollup-plugin-visualizer": "^5.8.3",
