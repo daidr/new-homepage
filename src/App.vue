@@ -1,5 +1,4 @@
 <script setup>
-import MessageContainer from '@/components/Message/MessageContainer.vue';
 import { onMounted } from 'vue';
 import { RouterLink, RouterView } from 'vue-router';
 import Footer from './components/Footer.vue';
@@ -35,7 +34,6 @@ onMounted(() => {
     <RouterLink to="/projects">Projects</RouterLink>
     <RouterLink to="/">Index</RouterLink>
   </div> -->
-  <MessageContainer />
   <Footer />
 </template>
 
