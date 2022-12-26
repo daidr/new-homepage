@@ -1,11 +1,25 @@
 <script setup>
 import MessageContainer from '@/components/Message/MessageContainer.vue';
+import { onMounted } from 'vue';
 import { RouterLink, RouterView } from 'vue-router';
 import RouterTransition from './components/RouterTransition.vue';
 
 const randomThemeIndex = Math.floor(Math.random() * 8) + 1
 document.body.classList.add(`theme-${randomThemeIndex}`)
 
+// 获取css变量 --color-primary-light 的值
+const getCssVar = (name) => {
+  return getComputedStyle(document.body).getPropertyValue(name)
+}
+
+// 设置 theme color
+const setThemeColor = (color) => {
+  document.querySelector('meta[name="theme-color"]').setAttribute('content', color)
+}
+
+onMounted(() => {
+  setThemeColor(`rgb(${getCssVar('--color-primary-light')})`)
+})
 </script>
 
 <template>
@@ -26,8 +40,7 @@ document.body.classList.add(`theme-${randomThemeIndex}`)
 <style scoped lang="scss">
 .main-wrapper {
   @apply bg-primary-light;
-  @apply h-screen;
-  transform: translateZ(-1000px);
+  @apply h-full;
   transform-style: preserve-3d;
   perspective-origin: 150% 150%;
 }
