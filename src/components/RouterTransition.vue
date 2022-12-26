@@ -281,7 +281,10 @@ const onBeforeLeave = (el) => {
 
 const onLeave = (el, done) => {
     if (!enableTransition.value) {
-        done();
+        setTimeout(() => {
+            console.log(1)
+            done();
+        }, Math.max(0, 1310 - (Date.now() - startLoadingTime)))
         return;
     }
 
