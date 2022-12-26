@@ -1,3 +1,8 @@
+<script setup>
+import SocialMediaNav from './SocialMediaNav.vue';
+
+</script>
+
 <template>
     <div class="wrapper">
         <div class="avatar">
@@ -10,6 +15,10 @@
         <div class="name">
             戴兜 <span>@DaiDR</span>
         </div>
+        <div class="motto">
+            Coding the world.
+        </div>
+        <SocialMediaNav class="socialmedia-wrapper" />
     </div>
 </template>
 
@@ -38,11 +47,21 @@
 
     .name {
         @apply text-2xl;
-        @apply mt-10;
+        @apply mt-11;
+        @apply text-primary/80 font-bold;
 
         span {
-            @apply text-lg font-extralight;
+            @apply text-lg font-normal text-primary/50;
         }
+    }
+
+    .motto {
+        @apply mt-3;
+        @apply font-normal text-primary/50;
+    }
+
+    .socialmedia-wrapper {
+        @apply mt-13;
     }
 }
 </style>

@@ -1,15 +1,18 @@
+<script setup>
+import { useRouter } from 'vue-router';
+
+const back = useRouter().back;
+</script>
+
 <template>
     <div id="projects-page-wrapper">
         <div class="projects-page-container">
             <div class="main-menu-wrapper">
                 <div class="menu-item">
-                    <div>2</div>
-                    <div>2</div>
-                    <div>2</div>
-                    <div>2</div>
-                    <div>2</div>
-                    <div>2</div>
-                    <div>2</div>
+                    <div>这是实验室页面（TODO）</div>
+                    <div>使用浏览器的后退按钮返回，或者
+                        <a class="text-primary font-bold cursor-pointer" @click="back()">点击这里</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -28,7 +31,7 @@
     backface-visibility: hidden;
 
     .projects-page-container {
-        @apply "transform-gpu translate-z-0 h-full";
+        @apply "transform-gpu translate-z-0 ";
     }
 
     .menu-item {

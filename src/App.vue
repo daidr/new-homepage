@@ -2,6 +2,7 @@
 import MessageContainer from '@/components/Message/MessageContainer.vue';
 import { onMounted } from 'vue';
 import { RouterLink, RouterView } from 'vue-router';
+import Footer from './components/Footer.vue';
 import RouterTransition from './components/RouterTransition.vue';
 
 const randomThemeIndex = Math.floor(Math.random() * 8) + 1
@@ -30,11 +31,12 @@ onMounted(() => {
       </RouterTransition>
     </RouterView>
   </div>
-  <div class="debug">
+  <!-- <div class="debug">
     <RouterLink to="/projects">Projects</RouterLink>
     <RouterLink to="/">Index</RouterLink>
-  </div>
+  </div> -->
   <MessageContainer />
+  <Footer />
 </template>
 
 <style scoped lang="scss">
@@ -43,6 +45,7 @@ onMounted(() => {
   @apply h-full;
   transform-style: preserve-3d;
   perspective-origin: 150% 150%;
+  background-image: url(/images/bg.svg);
 }
 
 .debug {

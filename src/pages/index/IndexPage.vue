@@ -1,7 +1,7 @@
 <script setup>
-import { ref } from 'vue';
+import { defineAsyncComponent, ref } from 'vue';
 import CardMe from './views/CardMe.vue';
-import CardFriends from './views/CardFriends.vue';
+const CardFriends = defineAsyncComponent(() => import('./views/CardFriends.vue'))
 
 
 const containerEl = ref()
@@ -83,7 +83,7 @@ const onNavClick = (nav) => {
 
             .menu-item {
                 @apply relative;
-                @apply text-primary/70 font-bold text-lg;
+                @apply text-primary/70 font-semibold text-lg;
                 @apply cursor-pointer z-0;
                 @apply transition-all;
                 @apply flex items-center;
