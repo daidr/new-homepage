@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@iconify-json/icon-park-outline": "^1.1.7",
+    "@iconify-json/uil": "^1.1.2",
     "@vitejs/plugin-vue": "^4.0.0",
     "pinia": "^2.0.28",
     "rollup-plugin-visualizer": "^5.8.3",
