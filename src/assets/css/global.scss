@@ -46,3 +46,8 @@
 .index-page-fade-transition-leave-to {
   @apply opacity-0;
 }
+
+.transition-page-wrapper {
+  @apply "transform-gpu translate-z-200vh";
+  @apply backface-hidden;
+}

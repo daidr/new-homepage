@@ -103,10 +103,9 @@ watch(() => route.query, onQueryChange, { immediate: true })
 <style scoped lang="scss">
 .transition-page-wrapper {
     @apply "w-[350px] sm:w-[400px] h-[500px]";
-    @apply "rounded-4xl";
-    @apply "absolute top-1/2 left-1/2";
-    @apply "transform-gpu -translate-x-1/2 -translate-y-1/2 translate-z-200vh";
-    backface-visibility: hidden;
+    @apply "absolute top-1/2 left-1/2 rounded-4xl";
+    @apply "-translate-x-1/2 -translate-y-1/2";
+
 
     .index-page-container {
         @apply "transform-gpu translate-z-200vh h-full";
@@ -185,7 +184,7 @@ watch(() => route.query, onQueryChange, { immediate: true })
                 @apply rounded-4xl;
                 @apply absolute top-0 left-0 right-0 bottom-0;
                 @apply transform-gpu;
-                backface-visibility: hidden;
+                @apply backface-hidden;
             }
 
             .card-friends {

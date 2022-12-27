@@ -25,10 +25,8 @@ const back = useRouter().back;
     @apply "rounded-0px";
     @apply "bg-white";
     @apply "fixed top-0 left-0";
-    @apply "transform-gpu translate-z-200vh";
     @apply "shadow-2xl shadow-primary/30";
     @apply "overflow-hidden";
-    backface-visibility: hidden;
 
     .projects-page-container {
         @apply "transform-gpu translate-z-0 ";
