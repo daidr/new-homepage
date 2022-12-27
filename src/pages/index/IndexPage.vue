@@ -46,12 +46,14 @@ const onNavClick = (nav) => {
                 </RouterLink>
             </div>
             <div ref="contentEl" class="content-wrapper" :data-content="currentContent">
-                <div class="card-me">
-                    <CardMe />
-                </div>
-                <div class="card-friends">
-                    <CardFriends />
-                </div>
+                <Transition name="index-page-fade-transition">
+                    <div v-if="currentContent == 'me'" class="card-me">
+                        <CardMe />
+                    </div>
+                    <div v-else-if="currentContent == 'friends'" class="card-friends">
+                        <CardFriends />
+                    </div>
+                </Transition>
             </div>
         </div>
     </div>
@@ -138,22 +140,15 @@ const onNavClick = (nav) => {
 
             .card-me,
             .card-friends {
+                @apply bg-white;
+                @apply rounded-4xl;
                 @apply absolute top-0 left-0 right-0 bottom-0;
-                @apply transform-gpu transition-opacity duration-600;
-                @apply opacity-0;
+                @apply transform-gpu;
                 backface-visibility: hidden;
             }
 
             .card-friends {
                 @apply rotate-y-180;
-            }
-
-            &[data-content="me"] .card-me {
-                @apply opacity-100;
-            }
-
-            &[data-content="friends"] .card-friends {
-                @apply opacity-100;
             }
 
             &[data-content="friends"] {
