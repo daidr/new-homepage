@@ -54,7 +54,7 @@ router.beforeEach((to, from, next) => {
             toAnimation(_slotEl, _toWrapperStyle, _fromWrapperStyle);
         }
         fromAnimation(_loadingEl, _fromWrapperStyle, _toWrapperStyle);
-    }, 10);
+    }, 100);
     next();
 });
 
