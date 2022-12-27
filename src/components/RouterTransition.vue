@@ -2,6 +2,10 @@
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
+const toggleDecoration = (show) => {
+    document.body.classList[show ? 'remove' : 'add']('hide-extra-wrapper');
+}
+
 const getTransitionContainer = (el) => {
     const containerClass = 'transition-page-wrapper';
     // 如果el不是元素，直接返回
@@ -39,7 +43,7 @@ router.beforeEach((to, from, next) => {
     clearTimeout(TIMER);
     TIMER = setTimeout(() => {
         enableTransition.value = false;
-
+        toggleDecoration(false);
         const _loadingEl = getTransitionContainer(LoadingEl.value);
         const _slotEl = getTransitionContainer(SlotEl.value);
 
@@ -73,6 +77,7 @@ router.afterEach((to, from) => {
             _fromWrapperStyle.set = true;
             toAnimation(_loadingEl, _toWrapperStyle, _fromWrapperStyle, true);
             fromAnimation(_slotEl, _fromWrapperStyle, _toWrapperStyle, true);
+
         }, Math.max(1300 - delta, 0));
     }
 });
@@ -121,6 +126,7 @@ const fromAnimation = (el, fromBound, selfBound, clear) => {
             SlotEl.value.style.willChange = "";
             // 移除监听
             el.removeEventListener('transitionend', _tmp);
+            toggleDecoration(true);
         }, { once: true });
     }
 
@@ -223,16 +229,17 @@ const toWrapperStyle = reactive({
 });
 
 const onBeforeEnter = (el) => {
-    el = getTransitionContainer(el);
+    toggleDecoration(false);
     // 克隆
-    const toWrapper = el.cloneNode(true);
+    let toWrapper = el.cloneNode(true);
     toWrapper.style.transitionDuration = '0s'
     // 设置 opacity 为 0
     toWrapper.style.opacity = 0;
     // 插入到 body
     document.body.appendChild(toWrapper);
 
-    writeBound(toWrapper, toWrapperStyle);
+    let _toWrapper = getTransitionContainer(toWrapper);
+    writeBound(_toWrapper, toWrapperStyle);
     // 移除
     toWrapper.remove();
 }
@@ -297,14 +304,14 @@ const onAfterEnter = (el) => {
 }
 
 const onBeforeLeave = (el) => {
-    el = getTransitionContainer(el);
     // 克隆
-    const fromWrapper = el.cloneNode(true);
+    let fromWrapper = el.cloneNode(true);
     fromWrapper.style.transitionDuration = '0s'
     // 插入到 body
     document.body.appendChild(fromWrapper);
 
-    writeBound(fromWrapper, fromWrapperStyle);
+    let _fromWrapper = getTransitionContainer(fromWrapper);
+    writeBound(_fromWrapper, fromWrapperStyle);
     fromWrapperStyle.set = true;
     // 移除
     fromWrapper.remove();
@@ -341,6 +348,7 @@ const onLeave = (el, done) => {
 }
 
 const onAfterLeave = (el) => {
+    toggleDecoration(true);
     // TODO: 不实现也没啥问题，因为动画结束后元素已经被移除了
 }
 </script>
