@@ -1,45 +1,86 @@
 <script setup>
-import { defineAsyncComponent, ref } from 'vue';
+import { defineAsyncComponent, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
 import CardMe from './views/CardMe.vue';
 const CardFriends = defineAsyncComponent(() => import('./views/CardFriends.vue'))
 
+const route = useRoute()
+
+const AVAILABLE_CONTENT = ['me', 'friends']
+
+const getQueryContent = (query) => {
+    if (!query) {
+        return 'me'
+    }
+    const content = query.c
+    if (AVAILABLE_CONTENT.includes(content)) {
+        return content
+    }
+    return 'me'
+}
 
 const containerEl = ref()
 const contentEl = ref()
-const currentContent = ref('me')
+const currentContent = ref(getQueryContent(route.query))
+let isInAnimation = false;
 const onNavClick = (nav) => {
     if (contentEl.value.dataset.content === nav) {
         return
     }
 
     containerEl.value.dataset.type = 'spilt'
+    isInAnimation = true
 
     setTimeout(() => {
         currentContent.value = nav
         contentEl.value.style.transitionDuration = '1000ms'
 
         setTimeout(() => {
-            containerEl.value.dataset.type = ''
-            contentEl.value.style.transitionDuration = ''
-        }, 1100)
+            containerEl.value && (containerEl.value.dataset.type = '')
+            contentEl.value && (contentEl.value.style.transitionDuration = '')
+            isInAnimation = false
+        }, 1010)
     }, 300)
-
-
 }
+
+// 监听query变化
+const onQueryChange = (to, from) => {
+    if (isInAnimation) {
+        return
+    }
+    if (!from) {
+        return
+    }
+
+    const toContent = getQueryContent(to)
+    const fromContent = getQueryContent(from)
+
+    if (toContent === fromContent || route.path !== '/') {
+        return
+    }
+
+    if (AVAILABLE_CONTENT.includes(toContent)) {
+        onNavClick(toContent)
+    }
+}
+
+watch(() => route.query, onQueryChange, { immediate: true })
 </script>
 
 <template>
     <div class="transition-page-wrapper">
         <div ref="containerEl" class="index-page-container">
             <div class="main-menu-wrapper">
-                <div class="menu-item" :class="{ active: currentContent == 'me' }" @click="onNavClick('me')">
+                <RouterLink :to="{ name: 'index', query: { c: 'me' } }" class="menu-item"
+                    :class="{ active: currentContent == 'me' }" @click="onNavClick('me')">
                     <i-icon-park-outline-bear />
                     我
-                </div>
-                <div class="menu-item" :class="{ active: currentContent == 'friends' }" @click="onNavClick('friends')">
+                </RouterLink>
+                <RouterLink :to="{ name: 'index', query: { c: 'friends' } }" class="menu-item"
+                    :class="{ active: currentContent == 'friends' }" @click="onNavClick('friends')">
                     <i-icon-park-outline-notebook />
                     朋友们
-                </div>
+                </RouterLink>
                 <RouterLink to="/projects" class="menu-item">
                     <i-icon-park-outline-experiment-one />
                     实验室
