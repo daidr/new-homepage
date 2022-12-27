@@ -47,7 +47,7 @@ const urls = [
 
 <style scoped lang="scss">
 .socialmedia-nav-wrapper {
-    @apply flex w-full justify-center gap-x-3;
+    @apply flex w-full justify-center space-x-3;
 
     .nav-item {
         @apply text-lg;
