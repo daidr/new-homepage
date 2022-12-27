@@ -22,7 +22,7 @@ footer {
             @apply "absolute bottom-0 left-0 w-0 h-2px md:h-4px";
             @apply rounded-full;
             @apply bg-white;
-            @apply transition-all;
+            @apply transition-all duration-400;
         }
 
         &:hover::after {
