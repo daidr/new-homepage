@@ -29,7 +29,7 @@ const onNavClick = (nav) => {
 </script>
 
 <template>
-    <div id="index-page-wrapper">
+    <div class="transition-page-wrapper">
         <div ref="containerEl" class="index-page-container">
             <div class="main-menu-wrapper">
                 <div class="menu-item" :class="{ active: currentContent == 'me' }" @click="onNavClick('me')">
@@ -58,7 +58,7 @@ const onNavClick = (nav) => {
 </template>
 
 <style scoped lang="scss">
-#index-page-wrapper {
+.transition-page-wrapper {
     @apply "w-[350px] sm:w-[400px] h-[500px]";
     @apply "rounded-4xl";
     @apply "absolute top-1/2 left-1/2";
@@ -74,7 +74,7 @@ const onNavClick = (nav) => {
         .main-menu-wrapper {
             @apply "rounded-t-4xl";
             @apply "bg-white";
-            @apply "flex justify-center gap-x-4";
+            @apply "flex justify-center space-x-3";
             @apply "py-6";
             @apply "select-none";
             transition-property: transform, border-radius;
@@ -139,12 +139,21 @@ const onNavClick = (nav) => {
             .card-me,
             .card-friends {
                 @apply absolute top-0 left-0 right-0 bottom-0;
-                @apply transform-gpu;
+                @apply transform-gpu transition-opacity duration-600;
+                @apply opacity-0;
                 backface-visibility: hidden;
             }
 
             .card-friends {
                 @apply rotate-y-180;
+            }
+
+            &[data-content="me"] .card-me {
+                @apply opacity-100;
+            }
+
+            &[data-content="friends"] .card-friends {
+                @apply opacity-100;
             }
 
             &[data-content="friends"] {

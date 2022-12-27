@@ -2,6 +2,26 @@
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
+const getTransitionContainer = (el) => {
+    const containerClass = 'transition-page-wrapper';
+    // 如果el不是元素，直接返回
+    if (!el || !el.classList) {
+        return el;
+    }
+    // 如果el是transition-page-wrapper，直接返回
+    if (el.classList.contains(containerClass)) {
+        return el;
+    }
+    // 否则，遍历el的子元素，找到transition-page-wrapper
+    for (let i = 0; i < el.children.length; i++) {
+        const child = el.children[i];
+        if (child.classList.contains(containerClass)) {
+            return child;
+        }
+    }
+    return el;
+}
+
 const enableTransition = ref(true);
 
 const router = useRouter();
@@ -19,14 +39,18 @@ router.beforeEach((to, from, next) => {
     clearTimeout(TIMER);
     TIMER = setTimeout(() => {
         enableTransition.value = false;
-        writeBound(LoadingEl.value, _toWrapperStyle);
-        if (SlotEl.value && SlotEl.value.nodeName != '#comment') {
-            writeBound(SlotEl.value, _fromWrapperStyle);
+
+        const _loadingEl = getTransitionContainer(LoadingEl.value);
+        const _slotEl = getTransitionContainer(SlotEl.value);
+
+        writeBound(_loadingEl, _toWrapperStyle);
+        if (_slotEl && _slotEl.nodeName != '#comment') {
+            writeBound(_slotEl, _fromWrapperStyle);
             _fromWrapperStyle.set = true;
-            toAnimation(SlotEl.value, _toWrapperStyle, _fromWrapperStyle);
+            toAnimation(_slotEl, _toWrapperStyle, _fromWrapperStyle);
         }
-        fromAnimation(LoadingEl.value, _fromWrapperStyle, _toWrapperStyle);
-    }, 200);
+        fromAnimation(_loadingEl, _fromWrapperStyle, _toWrapperStyle);
+    }, 10);
     next();
 });
 
@@ -41,11 +65,14 @@ router.afterEach((to, from) => {
     if (!enableTransition.value) {
         const delta = Date.now() - startLoadingTime;
         setTimeout(() => {
-            writeBound(LoadingEl.value, _fromWrapperStyle);
-            writeBound(SlotEl.value, _toWrapperStyle);
+            const _loadingEl = getTransitionContainer(LoadingEl.value);
+            const _slotEl = getTransitionContainer(SlotEl.value);
+
+            writeBound(_loadingEl, _fromWrapperStyle);
+            writeBound(_slotEl, _toWrapperStyle);
             _fromWrapperStyle.set = true;
-            toAnimation(LoadingEl.value, _toWrapperStyle, _fromWrapperStyle, true);
-            fromAnimation(SlotEl.value, _fromWrapperStyle, _toWrapperStyle, true);
+            toAnimation(_loadingEl, _toWrapperStyle, _fromWrapperStyle, true);
+            fromAnimation(_slotEl, _fromWrapperStyle, _toWrapperStyle, true);
         }, Math.max(1300 - delta, 0));
     }
 });
@@ -196,6 +223,7 @@ const toWrapperStyle = reactive({
 });
 
 const onBeforeEnter = (el) => {
+    el = getTransitionContainer(el);
     // 克隆
     const toWrapper = el.cloneNode(true);
     toWrapper.style.transitionDuration = '0s'
@@ -210,6 +238,7 @@ const onBeforeEnter = (el) => {
 }
 
 const onEnter = (el, done) => {
+    el = getTransitionContainer(el);
     if (!fromWrapperStyle.set) {
         done();
         return;
@@ -258,6 +287,7 @@ const onEnter = (el, done) => {
 }
 
 const onAfterEnter = (el) => {
+    el = getTransitionContainer(el);
     el.classList.remove('transition-router');
     el.style.transitionDuration = "";
     el.style.willChange = "";
@@ -267,6 +297,7 @@ const onAfterEnter = (el) => {
 }
 
 const onBeforeLeave = (el) => {
+    el = getTransitionContainer(el);
     // 克隆
     const fromWrapper = el.cloneNode(true);
     fromWrapper.style.transitionDuration = '0s'
@@ -280,9 +311,9 @@ const onBeforeLeave = (el) => {
 }
 
 const onLeave = (el, done) => {
+    el = getTransitionContainer(el);
     if (!enableTransition.value) {
         setTimeout(() => {
-            console.log(1)
             done();
         }, Math.max(0, 1310 - (Date.now() - startLoadingTime)))
         return;

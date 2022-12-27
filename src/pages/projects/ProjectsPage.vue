@@ -5,7 +5,7 @@ const back = useRouter().back;
 </script>
 
 <template>
-    <div id="projects-page-wrapper">
+    <div class="transition-page-wrapper">
         <div class="projects-page-container">
             <div class="main-menu-wrapper">
                 <div class="menu-item">
@@ -20,7 +20,7 @@ const back = useRouter().back;
 </template>
 
 <style scoped lang="scss">
-#projects-page-wrapper {
+.transition-page-wrapper {
     @apply "w-full h-full";
     @apply "rounded-0px";
     @apply "bg-white";
