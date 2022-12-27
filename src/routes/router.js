@@ -15,7 +15,7 @@ for (const element in routeModules) {
 }
 
 const router = VueRouter.createRouter({
-  history: VueRouter.createWebHashHistory(),
+  history: VueRouter.createWebHistory(),
   routes,
 });
 
