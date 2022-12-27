@@ -1,4 +1,5 @@
 <script setup>
+import LazyImage from '@/components/LazyImage.vue';
 import SocialMediaNav from './SocialMediaNav.vue';
 
 </script>
@@ -6,7 +7,7 @@ import SocialMediaNav from './SocialMediaNav.vue';
 <template>
     <div class="wrapper">
         <div class="avatar">
-            <img src="/images/avatar.png" alt="AVATAR">
+            <LazyImage src="/images/avatar.png" alt="AVATAR" />
             <svg view-box="0 0 172 172" width="172px" height="172px">
                 <circle cx='86' cy='86' r='80' stroke-width='12' class="stroke-primary-light" fill="none"
                     stroke-linecap='round' stroke-dasharray="390, 502" transform='rotate(-38 86 86)'></circle>
