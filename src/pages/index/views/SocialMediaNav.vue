@@ -53,7 +53,9 @@ const urls = [
         @apply text-lg;
         @apply text-primary-extralight bg-primary-medium;
         @apply rounded-full relative;
-        @apply p-2 cursor-pointer;
+        @apply cursor-pointer;
+        @apply w-38px h-38px;
+        @apply flex items-center justify-center;
 
         &::before {
             content: "";
