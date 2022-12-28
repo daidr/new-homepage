@@ -19,7 +19,7 @@ const loaded = ref(false)
 const noAnimation = ref(false)
 
 const onLoad = () => {
-    if (Date.now() - initTime < 100) {
+    if (Date.now() - initTime < 10) {
         noAnimation.value = true
     }
     loaded.value = true
