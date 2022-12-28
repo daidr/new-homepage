@@ -1,25 +1,23 @@
 <script setup>
-import { onMounted } from 'vue';
-import { RouterLink, RouterView } from 'vue-router';
+import { watch } from 'vue';
+import { useCssVar } from '@vueuse/core';
+import { RouterView } from 'vue-router';
 import Footer from './components/Footer.vue';
 import RouterTransition from './components/RouterTransition.vue';
 
 const randomThemeIndex = Math.floor(Math.random() * 8) + 1
 document.body.classList.add(`theme-${randomThemeIndex}`)
 
-// 获取css变量 --color-primary-light 的值
-const getCssVar = (name) => {
-  return getComputedStyle(document.body).getPropertyValue(name)
-}
-
 // 设置 theme color
 const setThemeColor = (color) => {
   document.querySelector('meta[name="theme-color"]').setAttribute('content', color)
 }
 
-onMounted(() => {
-  setThemeColor(`rgb(${getCssVar('--color-primary-light')})`)
-})
+const themeColor = useCssVar('--color-primary-light', document.body)
+
+watch(() => themeColor.value, (value) => {
+  setThemeColor(`rgb(${value.trim()})`)
+}, { immediate: true })
 </script>
 
 <template>
@@ -30,10 +28,7 @@ onMounted(() => {
       </RouterTransition>
     </RouterView>
   </div>
-  <!-- <div class="debug">
-    <RouterLink to="/projects">Projects</RouterLink>
-    <RouterLink to="/">Index</RouterLink>
-  </div> -->
+
   <Footer />
 </template>
 
