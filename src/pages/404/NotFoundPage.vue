@@ -24,7 +24,7 @@ onMounted(() => {
                     <div class="text">页面走丢了，不过好在你可以：</div>
                     <div class="btn-group">
                         <RouterLink to="/" class="link-btn">去首页</RouterLink>
-                        <a v-if="showBackBtn" class="link-btn" @click="back()">返回上一页</a>
+                        <a v-if="showBackBtn" class="link-btn" @click="back()">去上一页</a>
                     </div>
                 </div>
             </div>
