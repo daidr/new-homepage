@@ -33,14 +33,12 @@ const onNavClick = (nav) => {
 
     setTimeout(() => {
         currentContent.value = nav
-        contentEl.value.style.transitionDuration = '1000ms'
 
         setTimeout(() => {
-            containerEl.value && (containerEl.value.dataset.type = '')
-            contentEl.value && (contentEl.value.style.transitionDuration = '')
+            containerEl.value.dataset.type = ''
             isInAnimation = false
-        }, 1010)
-    }, 300)
+        }, 1000)
+    }, 310)
 }
 
 // 监听query变化
@@ -173,9 +171,7 @@ watch(() => route.query, onQueryChange, { immediate: true })
             @apply "flex-grow relative";
             @apply "bg-white";
             @apply "rounded-b-4xl transform-gpu translate-z-200vh";
-            transition-property: transform, border-radius;
-            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-            transition-duration: 300ms;
+            transition: border-radius cubic-bezier(0.4, 0, 0.2, 1) 300ms, transform cubic-bezier(0.4, 0, 0.2, 1) 1000ms;
             transform-style: preserve-3d;
 
             .card-me,
@@ -206,13 +202,12 @@ watch(() => route.query, onQueryChange, { immediate: true })
         .main-menu-wrapper {
             @apply rounded-4xl;
             @apply "shadow-2xl shadow-primary/30";
-            @apply transform-gpu -translate-y-2;
+            @apply transform-gpu -translate-y-4;
         }
 
         .content-wrapper {
             @apply rounded-4xl;
             @apply "shadow-2xl shadow-primary/30";
-            @apply translate-y-2;
         }
     }
 }
