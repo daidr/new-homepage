@@ -305,16 +305,11 @@ const onAfterEnter = (el) => {
 
 const onBeforeLeave = (el) => {
     // 克隆
-    let fromWrapper = el.cloneNode(true);
-    fromWrapper.style.transitionDuration = '0s'
-    // 插入到 body
-    document.body.appendChild(fromWrapper);
+    let fromWrapper = el;
 
     let _fromWrapper = getTransitionContainer(fromWrapper);
     writeBound(_fromWrapper, fromWrapperStyle);
     fromWrapperStyle.set = true;
-    // 移除
-    fromWrapper.remove();
 }
 
 const onLeave = (el, done) => {
