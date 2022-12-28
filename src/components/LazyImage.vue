@@ -12,27 +12,33 @@ const props = defineProps({
     }
 })
 
-const loading = ref(true)
+const loaded = ref(false)
 
 const onLoad = () => {
-    loading.value = false
-}
-
-const onTransEnd = (e) => {
-    e.stopPropagation()
+    loaded.value = true
 }
 </script>
 
 <template>
-    <img :class="{ loading }" :src="src" :alt="alt" @load="onLoad" @transitionend="onTransEnd" />
+    <img :class="{ loaded }" :src="src" :alt="alt" @load="onLoad" />
 </template>
 
 <style scoped lang="scss">
 img {
-    @apply transition-opacity opacity-100 duration-300;
+    @apply opacity-0;
 
-    &.loading {
-        @apply opacity-0;
+    &.loaded {
+        animation: opacity-transition 0.15s ease-in-out forwards;
+    }
+}
+
+@keyframes opacity-transition {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
     }
 }
 </style>
