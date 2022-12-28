@@ -19,7 +19,7 @@ const showBottomShadow = ref(true);
 
 const onScroll = (e) => {
     const { scrollTop, scrollHeight, clientHeight } = e.target;
-    showTopShadow.value = scrollTop > 12;
+    showTopShadow.value = scrollTop > 3;
     showBottomShadow.value = scrollHeight - scrollTop > clientHeight;
 };
 </script>
@@ -57,13 +57,13 @@ const onScroll = (e) => {
     @apply py-5 px-2;
 
     .top-shadow {
-        @apply "absolute top-5 left-3 right-5 h-10 z-10";
+        @apply "absolute top-5 left-3 right-5 h-6 z-10";
         @apply "bg-gradient-to-t from-transparent to-white";
         @apply "pointer-events-none";
     }
 
     .bottom-shadow {
-        @apply "absolute bottom-5 left-3 right-5 h-10 z-10";
+        @apply "absolute bottom-5 left-3 right-5 h-6 z-10";
         @apply "bg-gradient-to-b from-transparent to-white";
         @apply "pointer-events-none";
     }
