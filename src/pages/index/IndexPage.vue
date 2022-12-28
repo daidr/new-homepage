@@ -2,7 +2,7 @@
 import { defineAsyncComponent, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import CardMe from './views/CardMe.vue';
-const CardFriends = defineAsyncComponent(() => import('./views/CardFriends.vue'))
+import CardFriends from './views/CardFriends.vue';
 
 const route = useRoute()
 
