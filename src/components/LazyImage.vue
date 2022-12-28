@@ -1,4 +1,5 @@
 <script setup>
+import { useIntersectionObserver } from '@vueuse/core';
 import { ref } from 'vue';
 
 const props = defineProps({
@@ -8,9 +9,11 @@ const props = defineProps({
     },
     alt: {
         type: String,
-        required: true
+        default: ''
     }
 })
+
+const LazyImageContainerEl = ref();
 
 const initTime = Date.now()
 
@@ -23,36 +26,53 @@ const onLoad = () => {
         noAnimation.value = true
     }
     loaded.value = true
-
 }
+
+const targetIsVisible = ref(false)
+
+const { stop } = useIntersectionObserver(
+    LazyImageContainerEl,
+    ([{ isIntersecting }]) => {
+        if (isIntersecting) {
+            targetIsVisible.value = true
+            stop()
+        }
+    },
+)
 </script>
 
 <template>
-    <img :class="{
+    <div ref="LazyImageContainerEl" class="lazy-image">
+        <img v-if="targetIsVisible" :class="{
     loaded, 'no-animation': noAnimation
 }" :src="src" :alt="alt" @load="onLoad" />
+    </div>
 </template>
 
 <style scoped lang="scss">
-img {
-    @apply opacity-0;
+.lazy-image {
+    @apply w-full h-full overflow-hidden;
 
-    &.loaded:not(.no-animation) {
-        animation: opacity-transition 0.15s ease-in-out forwards;
+    img {
+        @apply opacity-0 w-full h-full;
+
+        &.loaded:not(.no-animation) {
+            animation: opacity-transition 0.15s ease-in-out forwards;
+        }
+
+        &.no-animation {
+            @apply opacity-100;
+        }
     }
 
-    &.no-animation {
-        @apply opacity-100;
-    }
-}
+    @keyframes opacity-transition {
+        0% {
+            opacity: 0;
+        }
 
-@keyframes opacity-transition {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
+        100% {
+            opacity: 1;
+        }
     }
 }
 </style>

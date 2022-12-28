@@ -1,4 +1,5 @@
 <script setup>
+import LazyImage from '@/components/LazyImage.vue';
 import FriendsList from '@/config/friends.json';
 import { ref } from 'vue';
 
@@ -32,7 +33,7 @@ const onScroll = (e) => {
         <Transition name="fade">
             <div v-if="showBottomShadow" class="bottom-shadow"></div>
         </Transition>
-        <div class="friends-container" @scroll="onScroll">
+        <div class="friends-container" @scroll.passive="onScroll">
             <a v-for="item of FriendsListShuffled" :key="item.name" class="friend" :href="item.url" target="_blank"
                 rel="noopener noreferrer">
                 <div class="avatar" :style="{ backgroundColor: item.color }">
@@ -113,8 +114,12 @@ const onScroll = (e) => {
                 @apply w-13 h-13 rounded-xl mr-2 select-none;
                 @apply flex-shrink-0;
 
-                img {
-                    @apply rounded-xl w-full h-full;
+                .lazy-image {
+                    @apply rounded-xl;
+
+                    &:deep(img) {
+                        @apply rounded-xl;
+                    }
                 }
             }
 
