@@ -1,8 +1,15 @@
 <script setup>
 import NotFoundImage from '@/components/NotFoundImage.vue';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const back = useRouter().back;
+
+const showBackBtn = ref(false);
+
+onMounted(() => {
+    showBackBtn.value = history.length > 1;
+});
 </script>
 
 <template>
@@ -17,7 +24,7 @@ const back = useRouter().back;
                     <div class="text">页面走丢了，不过好在你可以：</div>
                     <div class="btn-group">
                         <RouterLink to="/" class="link-btn">去首页</RouterLink>
-                        <a class="link-btn" @click="back()">返回上一页</a>
+                        <a v-if="showBackBtn" class="link-btn" @click="back()">返回上一页</a>
                     </div>
                 </div>
             </div>
@@ -54,7 +61,7 @@ const back = useRouter().back;
 
                 .link-btn {
                     @apply text-base whitespace-nowrap;
-                    @apply text-primary-extralight bg-primary-medium;
+                    @apply text-white bg-primary-medium;
                     @apply rounded-full relative;
                     @apply cursor-pointer;
                     @apply px-3 py-1.5;
@@ -79,12 +86,12 @@ const back = useRouter().back;
     }
 
     .decoration-wrapper {
-        @apply "w-0 md:w-auto flex-grow";
+        @apply "w-0 md:w-auto flex-grow overflow-hidden";
         @apply "md:pr-15 lg:pr-25";
         @apply flex items-center;
 
         svg {
-            @apply opacity-70 w-full;
+            @apply opacity-90 w-full;
         }
 
     }
