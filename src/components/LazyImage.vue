@@ -12,23 +12,37 @@ const props = defineProps({
     }
 })
 
+const initTime = Date.now()
+
 const loaded = ref(false)
 
+const noAnimation = ref(false)
+
 const onLoad = () => {
+    if (Date.now() - initTime < 100) {
+        noAnimation.value = true
+    }
     loaded.value = true
+
 }
 </script>
 
 <template>
-    <img :class="{ loaded }" :src="src" :alt="alt" @load="onLoad" />
+    <img :class="{
+    loaded, 'no-animation': noAnimation
+}" :src="src" :alt="alt" @load="onLoad" />
 </template>
 
 <style scoped lang="scss">
 img {
     @apply opacity-0;
 
-    &.loaded {
+    &.loaded:not(.no-animation) {
         animation: opacity-transition 0.15s ease-in-out forwards;
+    }
+
+    &.no-animation {
+        @apply opacity-100;
     }
 }
 
