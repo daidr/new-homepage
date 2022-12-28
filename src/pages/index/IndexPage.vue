@@ -1,5 +1,5 @@
 <script setup>
-import { defineAsyncComponent, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import CardMe from './views/CardMe.vue';
 import CardFriends from './views/CardFriends.vue';
@@ -34,27 +34,21 @@ const onNavClick = (nav) => {
     let _event = null;
     MainMenuEl.value.addEventListener('transitionend', _event = (ev) => {
         ev.stopPropagation()
-        if (ev.target !== MainMenuEl.value) {
-            return
-        }
-        MainMenuEl.value.removeEventListener('transitionend', _event)
+        MainMenuEl.value.removeEventListener('transitionend', _event, { capture: false })
         currentContent.value = nav
         let _time = Date.now()
         let __event = null;
         contentEl.value.addEventListener('transitionend', __event = (ev) => {
             ev.stopPropagation()
-            if (ev.target !== contentEl.value) {
-                return
-            }
             if (Date.now() - _time < 500) {
                 return
             }
-            contentEl.value.removeEventListener('transitionend', __event)
+            contentEl.value.removeEventListener('transitionend', __event, { capture: false })
             containerEl.value.dataset.type = ''
             isInAnimation = false
 
-        })
-    })
+        }, { capture: false })
+    }, { capture: false })
 }
 
 // 监听query变化

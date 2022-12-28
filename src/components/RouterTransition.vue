@@ -120,15 +120,14 @@ const fromAnimation = (el, fromBound, selfBound, clear) => {
         // 监听动画结束
         let _event = null;
         el.addEventListener('transitionend', _event = (ev) => {
-            if (ev.target != el) return;
-            el.removeEventListener('transitionend', _event);
+            el.removeEventListener('transitionend', _event, { capture: false });
             // 重置 style
             el.style.opacity = "";
             SlotEl.value.classList.remove('transition-router');
             SlotEl.value.style.transitionDuration = "";
             SlotEl.value.style.willChange = "";
             toggleDecoration(true);
-        });
+        }, { capture: false });
     }
 
 }
