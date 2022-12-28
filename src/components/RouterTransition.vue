@@ -118,16 +118,17 @@ const fromAnimation = (el, fromBound, selfBound, clear) => {
 
     if (clear) {
         // 监听动画结束
-        const _tmp = el.addEventListener('transitionend', () => {
+        let _event = null;
+        el.addEventListener('transitionend', _event = (ev) => {
+            if (ev.target != el) return;
+            el.removeEventListener('transitionend', _event);
             // 重置 style
             el.style.opacity = "";
             SlotEl.value.classList.remove('transition-router');
             SlotEl.value.style.transitionDuration = "";
             SlotEl.value.style.willChange = "";
-            // 移除监听
-            el.removeEventListener('transitionend', _tmp);
             toggleDecoration(true);
-        }, { once: true });
+        });
     }
 
 }

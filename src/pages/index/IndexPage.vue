@@ -21,6 +21,7 @@ const getQueryContent = (query) => {
 
 const containerEl = ref()
 const contentEl = ref()
+const MainMenuEl = ref()
 const currentContent = ref(getQueryContent(route.query))
 let isInAnimation = false;
 const onNavClick = (nav) => {
@@ -30,15 +31,30 @@ const onNavClick = (nav) => {
 
     containerEl.value.dataset.type = 'spilt'
     isInAnimation = true
-
-    setTimeout(() => {
+    let _event = null;
+    MainMenuEl.value.addEventListener('transitionend', _event = (ev) => {
+        ev.stopPropagation()
+        if (ev.target !== MainMenuEl.value) {
+            return
+        }
+        MainMenuEl.value.removeEventListener('transitionend', _event)
         currentContent.value = nav
-
-        setTimeout(() => {
+        let _time = Date.now()
+        let __event = null;
+        contentEl.value.addEventListener('transitionend', __event = (ev) => {
+            ev.stopPropagation()
+            if (ev.target !== contentEl.value) {
+                return
+            }
+            if (Date.now() - _time < 500) {
+                return
+            }
+            contentEl.value.removeEventListener('transitionend', __event)
             containerEl.value.dataset.type = ''
             isInAnimation = false
-        }, 1000)
-    }, 310)
+
+        })
+    })
 }
 
 // 监听query变化
@@ -68,7 +84,7 @@ watch(() => route.query, onQueryChange, { immediate: true })
 <template>
     <div class="transition-page-wrapper">
         <div ref="containerEl" class="index-page-container">
-            <div class="main-menu-wrapper">
+            <div ref="MainMenuEl" class="main-menu-wrapper">
                 <RouterLink :to="{ name: 'index', query: { c: 'me' } }" class="menu-item"
                     :class="{ active: currentContent == 'me' }" @click="onNavClick('me')">
                     <i-icon-park-outline-bear />
@@ -109,7 +125,9 @@ watch(() => route.query, onQueryChange, { immediate: true })
         @apply "transform-gpu translate-z-200vh h-full";
         @apply "shadow-2xl shadow-primary/30";
         @apply "rounded-4xl";
+        @apply "bg-white";
         @apply flex flex-col;
+        @apply transition-colors delay-300 duration-0;
 
         .main-menu-wrapper {
             @apply "rounded-t-4xl";
@@ -198,6 +216,8 @@ watch(() => route.query, onQueryChange, { immediate: true })
     .index-page-container[data-type="spilt"] {
         @apply shadow-none;
         @apply pointer-events-none;
+        @apply bg-transparent;
+        @apply transition-none;
 
         .main-menu-wrapper {
             @apply rounded-4xl;
