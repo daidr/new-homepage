@@ -184,7 +184,7 @@ const onAfterLeave = (el) => {
             @apply "flex-grow relative";
             @apply "bg-white";
             @apply "rounded-b-4xl transform-gpu translate-z-200vh";
-            transition: border-radius cubic-bezier(0.4, 0, 0.2, 1) 300ms, transform cubic-bezier(0.4, 0, 0.2, 1) 1000ms 300ms;
+            transition: border-radius cubic-bezier(0.4, 0, 0.2, 1) 300ms, transform cubic-bezier(0.4, 0, 0.2, 1) 1000ms;
             transform-style: preserve-3d;
         }
     }
