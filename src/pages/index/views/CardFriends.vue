@@ -59,16 +59,16 @@ const onScroll = (e) => {
 <style scoped lang="scss">
 .friends-overflow-container {
     @apply h-full overflow-hidden rounded-b-4xl relative;
-    @apply py-5 px-2;
+    @apply py-14px px-2;
 
     .top-shadow {
-        @apply "absolute top-5 left-3 right-5 h-6 z-10";
+        @apply "absolute top-14px left-3 right-5 h-6 z-10";
         @apply "bg-gradient-to-t from-transparent to-white";
         @apply "pointer-events-none";
     }
 
     .bottom-shadow {
-        @apply "absolute bottom-5 left-3 right-5 h-6 z-10";
+        @apply "absolute bottom-14px left-3 right-5 h-6 z-10";
         @apply "bg-gradient-to-b from-transparent to-white";
         @apply "pointer-events-none";
     }
@@ -77,6 +77,8 @@ const onScroll = (e) => {
         @apply h-full overflow-y-scroll;
         @apply "grid grid-cols-1 gap-3";
         @apply px-3 py-6px;
+        scrollbar-width: thin;
+        scrollbar-color: rgb(var(--color-primary) / 0.8) rgb(var(--color-primary-extralight));
 
         // 滚动条
         &::-webkit-scrollbar {
