@@ -1,5 +1,6 @@
 import * as VueRouter from "vue-router";
 import { usePageAttrStore } from "@/stores/pageAttrStore";
+import { CONFIG } from "@/config/base";
 
 const routeModules = import.meta.globEager("../pages/**/routes.js");
 
@@ -26,7 +27,11 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach((to, from, failure) => {
   if (!failure) {
-    window.document.title = `${to.meta.pageTitle} | 戴兜的小屋` || "戴兜的小屋";
+    if (to.meta.pageTitle) {
+      window.document.title = `${to.meta.pageTitle} | ${CONFIG.siteName}`;
+    } else {
+      window.document.title = CONFIG.siteName;
+    }
   }
   // togglePageLoadingState(0, from, to);
 });
