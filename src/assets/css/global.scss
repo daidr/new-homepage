@@ -12,8 +12,18 @@
   overflow: hidden;
 }
 
+.y-scroll-box {
+  @apply overflow-y-scroll;
+}
+
 .transition-router {
   @apply transition-all;
+
+  @supports (-webkit-touch-callout: none) {
+    .y-scroll-box {
+      @apply overflow-hidden;
+    }
+  }
 }
 
 ::selection {
