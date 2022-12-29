@@ -290,9 +290,16 @@ const onEnter = (el, done) => {
         el.style.setProperty("--tw-scale-y", "");
     }, 10)
 
-    setTimeout(() => {
-        done();
-    }, 1310);
+    // setTimeout(() => {
+    //     done();
+    // }, 1310);
+    let _event = null;
+    el.addEventListener('transitionend', _event = (e) => {
+        if (e.target === el) {
+            el.removeEventListener('transitionend', _event, { capture: false });
+            done();
+        }
+    }, { capture: false })
 
 }
 
@@ -340,9 +347,17 @@ const onLeave = (el, done) => {
         el.style.opacity = "0";
     }, 10)
 
-    setTimeout(() => {
-        done();
-    }, 1310);
+    let _event = null;
+    el.addEventListener('transitionend', _event = (e) => {
+        if (e.target === el) {
+            el.removeEventListener('transitionend', _event, { capture: false });
+            done();
+        }
+    }, { capture: false })
+
+    // setTimeout(() => {
+    //     done();
+    // }, 1310);
 }
 
 const onAfterLeave = (el) => {
@@ -376,7 +391,7 @@ const onAfterLeave = (el) => {
     @apply "opacity-0";
     @apply "pointer-events-none";
     @apply flex items-center justify-center;
-    backface-visibility: hidden;
+    @apply backface-hidden;
 
     .loading-container {
         @apply w-12 h-12 relative;
