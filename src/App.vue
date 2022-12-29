@@ -1,23 +1,37 @@
 <script setup>
-import { watch } from 'vue';
-import { useCssVar } from '@vueuse/core';
+import { ref, watch } from 'vue';
 import { RouterView } from 'vue-router';
 import Footer from './components/Footer.vue';
 import RouterTransition from './components/RouterTransition.vue';
 
-const randomThemeIndex = Math.floor(Math.random() * 8) + 1
-document.body.classList.add(`theme-${randomThemeIndex}`)
+let currentThemeColor = null
+const initThemeColor = () => {
+  if (currentThemeColor) {
+    document.body.classList.remove(`theme-${currentThemeColor}`)
+  }
+  const randomThemeIndex = Math.floor(Math.random() * 8) + 1
+  document.body.classList.add(`theme-${randomThemeIndex}`)
+  currentThemeColor = randomThemeIndex
+  refreshThemeColor()
+}
 
 // 设置 theme color
 const setThemeColor = (color) => {
   document.querySelector('meta[name="theme-color"]').setAttribute('content', color)
 }
 
-const themeColor = useCssVar('--color-primary-light', document.body)
+let bodyStyle = window.getComputedStyle(document.body)
+const primaryColorLight = ref(bodyStyle.getPropertyValue('--color-primary-light').trim())
 
-watch(() => themeColor.value, (value) => {
+const refreshThemeColor = () => {
+  primaryColorLight.value = bodyStyle.getPropertyValue('--color-primary-light').trim()
+}
+
+watch(() => primaryColorLight.value, (value) => {
   setThemeColor(`rgb(${value.trim()})`)
 }, { immediate: true })
+
+initThemeColor()
 </script>
 
 <template>
@@ -27,6 +41,21 @@ watch(() => themeColor.value, (value) => {
         <component :is="Component" />
       </RouterTransition>
     </RouterView>
+    <div class="debug">
+      <details>
+        <summary>Debug</summary>
+        <div>主题色: {{ primaryColorLight }} (<span @click="initThemeColor">刷新</span>)</div>
+        <div class="links">
+          <RouterLink to="/projects">Projects</RouterLink>
+          <RouterLink to="/me">Me</RouterLink>
+          <RouterLink to="/friends">Friends</RouterLink>
+        </div>
+        <div class="links">
+          <RouterLink to="/123">404测试</RouterLink>
+        </div>
+      </details>
+
+    </div>
   </div>
 
   <Footer />
@@ -42,6 +71,16 @@ watch(() => themeColor.value, (value) => {
 }
 
 .debug {
-  @apply fixed bottom-0 right-0;
+  @apply fixed bottom-0 right-0 z-99999;
+  @apply transform-gpu translate-z-300vh;
+
+  .details {
+    @apply flex flex-col;
+  }
+
+  .links {
+    @apply space-x-1;
+  }
+
 }
 </style>
