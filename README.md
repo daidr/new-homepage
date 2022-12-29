@@ -29,7 +29,7 @@ pnpm build
 
 当然可以，但是可能修改起来不太方便，下面是一些注意事项。( `@/` 表示 `/src/` 目录)
 
-* `@/config` 下存放着一些配置文件，比如 `base.js` 存放了基础配置，`friends.json` 存放了朋友列表。
+* `@/config` 下存放着一些配置文件，比如 `base.js` 存放了基础配置，`friends.js` 存放了朋友列表。
 * `@/pages` 下存放着所有页面，每个页面都是一个单独的文件夹，文件夹下必须有一个 `routes.js` 文件，用于配置路由。你可以为路由设置元数据 `meta.pageTitle` 来配置页面标题。
 * `@/routes/router.js` 会自动载入 `@/pages` 下的所有路由，一般情况下**不需要**修改。
 * `@/components` 下存放着一些公共组件，比如 `@/components/LazyImage.vue` 就是图片懒加载组件，仅在图片元素可见时才会加载图片。

@@ -1,6 +1,6 @@
 <script setup>
 import LazyImage from '@/components/LazyImage.vue';
-import FriendsList from '@/config/friends.json';
+import { FriendsList } from '@/config/friends.js';
 import { ref } from 'vue';
 import CardWrapper from './CardWrapper.vue';
 
@@ -14,7 +14,7 @@ const shuffle = (arr) => {
     return newArr;
 };
 
-const FriendsListShuffled = shuffle(FriendsList);
+const FriendsListShuffled = shuffle(FriendsList).slice(0, 30);
 
 const showTopShadow = ref(false);
 const showBottomShadow = ref(true);
@@ -24,6 +24,7 @@ const onScroll = (e) => {
     showTopShadow.value = scrollTop > 3;
     showBottomShadow.value = scrollHeight - scrollTop > clientHeight;
 };
+
 </script>
 
 <template>
@@ -35,9 +36,9 @@ const onScroll = (e) => {
             <Transition name="fade">
                 <div v-if="showBottomShadow" class="bottom-shadow"></div>
             </Transition>
-            <div class="friends-container" @scroll.passive="onScroll">
-                <a v-for="item of FriendsListShuffled" :key="item.name" class="friend" :href="item.url" target="_blank"
-                    rel="noopener noreferrer">
+            <div class="friends-container y-scroll-box" @scroll.passive="onScroll">
+                <a v-for="item of FriendsListShuffled" :key="item.url" class="friend-item" :href="item.url"
+                    target="_blank" rel="noopener noreferrer">
                     <div class="avatar" :style="{ backgroundColor: item.color }">
                         <LazyImage :src="`/images/friends/${item.avatar}`" :alt="item.name" />
                     </div>
@@ -74,11 +75,10 @@ const onScroll = (e) => {
     }
 
     .friends-container {
-        @apply h-full overflow-y-scroll;
+        @apply h-full;
         @apply "grid grid-cols-1 gap-3";
         @apply px-3 py-5px;
-        scrollbar-width: thin;
-        scrollbar-color: rgb(var(--color-primary) / 0.8) rgb(var(--color-primary-extralight));
+
 
         // 滚动条
         &::-webkit-scrollbar {
@@ -95,11 +95,12 @@ const onScroll = (e) => {
             @apply rounded-full;
         }
 
-        .friend {
+        .friend-item {
             @apply flex;
             @apply bg-primary-extralight;
             @apply rounded-2xl p-2;
             @apply cursor-pointer relative;
+            @apply transition-all;
 
             &::before {
                 content: "";
