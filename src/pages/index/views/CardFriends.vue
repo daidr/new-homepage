@@ -2,6 +2,7 @@
 import LazyImage from '@/components/LazyImage.vue';
 import FriendsList from '@/config/friends.json';
 import { ref } from 'vue';
+import CardWrapper from './CardWrapper.vue';
 
 // 打乱 FriendsList
 const shuffle = (arr) => {
@@ -26,30 +27,33 @@ const onScroll = (e) => {
 </script>
 
 <template>
-    <div class="friends-overflow-container">
-        <Transition name="fade">
-            <div v-if="showTopShadow" class="top-shadow"></div>
-        </Transition>
-        <Transition name="fade">
-            <div v-if="showBottomShadow" class="bottom-shadow"></div>
-        </Transition>
-        <div class="friends-container" @scroll.passive="onScroll">
-            <a v-for="item of FriendsListShuffled" :key="item.name" class="friend" :href="item.url" target="_blank"
-                rel="noopener noreferrer">
-                <div class="avatar" :style="{ backgroundColor: item.color }">
-                    <LazyImage :src="`/images/friends/${item.avatar}`" :alt="item.name" />
-                </div>
-                <div class="detail">
-                    <div class="name">
-                        {{ item.name }}
+    <CardWrapper>
+        <div class="friends-overflow-container">
+            <Transition name="fade">
+                <div v-if="showTopShadow" class="top-shadow"></div>
+            </Transition>
+            <Transition name="fade">
+                <div v-if="showBottomShadow" class="bottom-shadow"></div>
+            </Transition>
+            <div class="friends-container" @scroll.passive="onScroll">
+                <a v-for="item of FriendsListShuffled" :key="item.name" class="friend" :href="item.url" target="_blank"
+                    rel="noopener noreferrer">
+                    <div class="avatar" :style="{ backgroundColor: item.color }">
+                        <LazyImage :src="`/images/friends/${item.avatar}`" :alt="item.name" />
                     </div>
-                    <div class="motto">
-                        {{ item.motto }}
+                    <div class="detail">
+                        <div class="name">
+                            {{ item.name }}
+                        </div>
+                        <div class="motto">
+                            {{ item.motto }}
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
-    </div>
+    </CardWrapper>
+
 </template>
 
 <style scoped lang="scss">

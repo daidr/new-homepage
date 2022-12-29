@@ -1,26 +1,30 @@
 <script setup>
 import LazyImage from '@/components/LazyImage.vue';
+import CardWrapper from './CardWrapper.vue';
 import SocialMediaNav from './SocialMediaNav.vue';
 
 </script>
 
 <template>
-    <div class="wrapper">
-        <div class="avatar">
-            <LazyImage src="/images/avatar.png" alt="AVATAR" />
-            <svg view-box="0 0 172 172" width="172px" height="172px">
-                <circle cx='86' cy='86' r='80' stroke-width='12' class="stroke-primary-light" fill="none"
-                    stroke-linecap='round' stroke-dasharray="390, 502" transform='rotate(-38 86 86)'></circle>
-            </svg>
+    <CardWrapper>
+        <div class="wrapper">
+            <div class="avatar">
+                <LazyImage src="/images/avatar.png" alt="AVATAR" />
+                <svg view-box="0 0 172 172" width="172px" height="172px">
+                    <circle cx='86' cy='86' r='80' stroke-width='12' class="stroke-primary-light" fill="none"
+                        stroke-linecap='round' stroke-dasharray="390, 502" transform='rotate(-38 86 86)'></circle>
+                </svg>
+            </div>
+            <div class="name">
+                戴兜 <span>@DaiDR</span>
+            </div>
+            <div class="motto">
+                Coding the world.
+            </div>
+            <SocialMediaNav class="socialmedia-wrapper" />
         </div>
-        <div class="name">
-            戴兜 <span>@DaiDR</span>
-        </div>
-        <div class="motto">
-            Coding the world.
-        </div>
-        <SocialMediaNav class="socialmedia-wrapper" />
-    </div>
+    </CardWrapper>
+
 </template>
 
 <style scoped lang="scss">

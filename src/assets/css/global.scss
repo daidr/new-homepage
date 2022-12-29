@@ -37,16 +37,6 @@
   }
 }
 
-.index-page-fade-transition-enter-active,
-.index-page-fade-transition-leave-active {
-  @apply transition-opacity ease-linear duration-0 delay-300;
-}
-
-.index-page-fade-transition-enter-from,
-.index-page-fade-transition-leave-to {
-  @apply opacity-0;
-}
-
 .transition-page-wrapper {
   @apply "transform-gpu translate-z-200vh";
   @apply backface-hidden;

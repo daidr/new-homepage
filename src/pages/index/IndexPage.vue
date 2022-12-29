@@ -1,12 +1,14 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { cloneVNode, h, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import CardMe from './views/CardMe.vue';
-import CardFriends from './views/CardFriends.vue';
 
 const route = useRoute()
 
 const AVAILABLE_CONTENT = ['me', 'friends']
+
+const reflow = () => {
+    return document.body.offsetHeight
+}
 
 const getQueryContent = (query) => {
     if (!query) {
@@ -72,20 +74,83 @@ const onQueryChange = (to, from) => {
     }
 }
 
-watch(() => route.query, onQueryChange, { immediate: true })
+
+const onBeforeEnter = (el) => {
+    containerEl.value.dataset.type = 'spilt'
+    el.style.transitionDuration = '0ms'
+    el.style.setProperty('--tw-rotate-y', '180deg')
+    reflow()
+    el.style.transitionDuration = ''
+}
+
+const onEnter = (el, done) => {
+    let _event = null;
+    MainMenuEl.value.addEventListener('transitionend', _event = (ev) => {
+        ev.stopPropagation()
+        MainMenuEl.value.removeEventListener('transitionend', _event, { capture: false })
+
+        contentEl.value.style.setProperty('--tw-rotate-y', '180deg')
+        let __event = null;
+
+        let _time = Date.now()
+        contentEl.value.addEventListener('transitionend', __event = (ev) => {
+            ev.stopPropagation()
+            if (Date.now() - _time < 500) {
+                return
+            }
+            contentEl.value.removeEventListener('transitionend', __event, { capture: false })
+            done()
+        }, { capture: false })
+    }, { capture: false })
+}
+
+const onLeave = (el, done) => {
+    setTimeout(() => {
+        done()
+    }, 900)
+}
+
+const onAfterEnter = (el) => {
+    containerEl.value.dataset.type = ''
+    let _event = null;
+    MainMenuEl.value.addEventListener('transitionend', _event = (ev) => {
+        ev.stopPropagation()
+        MainMenuEl.value.removeEventListener('transitionend', _event, { capture: false })
+
+        setTimeout(() => {
+            el.style.transitionDuration = '0ms'
+            contentEl.value.style.transitionDuration = '0ms'
+            el.style.transitionDelay = '0ms'
+            contentEl.value.style.transitionDelay = '0ms'
+
+            el.style.setProperty('--tw-rotate-y', '')
+            contentEl.value.style.setProperty('--tw-rotate-y', '')
+            reflow()
+            el.style.transitionDuration = ''
+            contentEl.value.style.transitionDuration = ''
+            el.style.transitionDelay = ''
+            contentEl.value.style.transitionDelay = ''
+        }, 0)
+    }, { capture: false })
+}
+
+const onAfterLeave = (el) => {
+    el.style.transitionDuration = '0ms'
+    el.style.opacity = 0
+    reflow()
+    el.style.transitionDuration = ''
+}
 </script>
 
 <template>
     <div class="transition-page-wrapper">
         <div ref="containerEl" class="index-page-container">
             <div ref="MainMenuEl" class="main-menu-wrapper">
-                <RouterLink :to="{ name: 'index', query: { c: 'me' } }" class="menu-item"
-                    :class="{ active: currentContent == 'me' }" @click="onNavClick('me')">
+                <RouterLink to="/me" class="menu-item">
                     <i-icon-park-outline-bear />
                     我
                 </RouterLink>
-                <RouterLink :to="{ name: 'index', query: { c: 'friends' } }" class="menu-item"
-                    :class="{ active: currentContent == 'friends' }" @click="onNavClick('friends')">
+                <RouterLink to="/friends" class="menu-item">
                     <i-icon-park-outline-notebook />
                     朋友们
                 </RouterLink>
@@ -94,15 +159,13 @@ watch(() => route.query, onQueryChange, { immediate: true })
                     实验室
                 </RouterLink>
             </div>
-            <div ref="contentEl" class="content-wrapper" :data-content="currentContent">
-                <Transition name="index-page-fade-transition">
-                    <div v-if="currentContent == 'me'" class="card-me">
-                        <CardMe />
-                    </div>
-                    <div v-else-if="currentContent == 'friends'" class="card-friends">
-                        <CardFriends />
-                    </div>
-                </Transition>
+            <div ref="contentEl" class="content-wrapper">
+                <RouterView v-slot="{ Component }">
+                    <Transition @before-enter="onBeforeEnter" @enter="onEnter" @leave="onLeave"
+                        @after-enter="onAfterEnter" @after-leave="onAfterLeave" :css="false">
+                        <component :is="Component" />
+                    </Transition>
+                </RouterView>
             </div>
         </div>
     </div>
@@ -183,28 +246,9 @@ watch(() => route.query, onQueryChange, { immediate: true })
             @apply "flex-grow relative";
             @apply "bg-white";
             @apply "rounded-b-4xl transform-gpu translate-z-200vh";
-            transition: border-radius cubic-bezier(0.4, 0, 0.2, 1) 300ms, transform cubic-bezier(0.4, 0, 0.2, 1) 1000ms;
+            transition: border-radius cubic-bezier(0.4, 0, 0.2, 1) 300ms, transform cubic-bezier(0.4, 0, 0.2, 1) 1000ms 300ms;
             transform-style: preserve-3d;
-
-            .card-me,
-            .card-friends {
-                @apply bg-white;
-                @apply rounded-4xl;
-                @apply absolute top-0 left-0 right-0 bottom-0;
-                @apply transform-gpu;
-                @apply backface-hidden;
-            }
-
-            .card-friends {
-                @apply rotate-y-180;
-            }
-
-            &[data-content="friends"] {
-                @apply rotate-y-180;
-            }
         }
-
-
     }
 
     .index-page-container[data-type="spilt"] {
