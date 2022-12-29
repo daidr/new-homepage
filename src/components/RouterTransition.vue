@@ -120,6 +120,7 @@ const fromAnimation = (el, fromBound, selfBound, clear) => {
         // 监听动画结束
         let _event = null;
         el.addEventListener('transitionend', _event = (ev) => {
+            if (ev.target != el) return;
             el.removeEventListener('transitionend', _event, { capture: false });
             // 重置 style
             el.style.opacity = "";
@@ -149,7 +150,11 @@ const toAnimation = (el, toBound, selfBound, clear) => {
     el.style.opacity = 0;
     if (clear) {
         // 监听动画结束
-        const _tmp = el.addEventListener('transitionend', () => {
+        let _event = null;
+        el.addEventListener('transitionend', _event = (ev) => {
+            if (ev.target != el) return;
+            // 移除监听
+            el.removeEventListener('transitionend', _event);
             // 重置 style
             el.classList.remove('transition-router');
             el.style.transitionDuration = "";
@@ -162,9 +167,7 @@ const toAnimation = (el, toBound, selfBound, clear) => {
             el.style.setProperty("--tw-translate-y", "");
             el.style.setProperty("--tw-scale-x", "");
             el.style.setProperty("--tw-scale-y", "");
-            // 移除监听
-            el.removeEventListener('transitionend', _tmp);
-        }, { once: true });
+        }, { capture: false });
     }
 }
 

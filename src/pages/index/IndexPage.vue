@@ -21,6 +21,7 @@ const onBeforeEnter = (el) => {
 const onEnter = (el, done) => {
     let _event = null;
     MainMenuEl.value.addEventListener('transitionend', _event = (ev) => {
+        if (ev.target != MainMenuEl.value) return;
         ev.stopPropagation()
         MainMenuEl.value.removeEventListener('transitionend', _event, { capture: false })
 
@@ -29,6 +30,7 @@ const onEnter = (el, done) => {
 
         let _time = Date.now()
         contentEl.value.addEventListener('transitionend', __event = (ev) => {
+            if (ev.target != contentEl.value) return;
             ev.stopPropagation()
             if (Date.now() - _time < 500) {
                 return
@@ -49,6 +51,7 @@ const onAfterEnter = (el) => {
     containerEl.value.dataset.type = ''
     let _event = null;
     MainMenuEl.value.addEventListener('transitionend', _event = (ev) => {
+        if (ev.target != MainMenuEl.value) return;
         ev.stopPropagation()
         MainMenuEl.value.removeEventListener('transitionend', _event, { capture: false })
 
