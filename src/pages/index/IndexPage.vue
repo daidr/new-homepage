@@ -1,78 +1,13 @@
 <script setup>
-import { cloneVNode, h, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
-
-const route = useRoute()
-
-const AVAILABLE_CONTENT = ['me', 'friends']
+import { ref } from 'vue';
 
 const reflow = () => {
     return document.body.offsetHeight
 }
 
-const getQueryContent = (query) => {
-    if (!query) {
-        return 'me'
-    }
-    const content = query.c
-    if (AVAILABLE_CONTENT.includes(content)) {
-        return content
-    }
-    return 'me'
-}
-
 const containerEl = ref()
 const contentEl = ref()
 const MainMenuEl = ref()
-const currentContent = ref(getQueryContent(route.query))
-let isInAnimation = false;
-const onNavClick = (nav) => {
-    if (contentEl.value.dataset.content === nav) {
-        return
-    }
-
-    containerEl.value.dataset.type = 'spilt'
-    isInAnimation = true
-    let _event = null;
-    MainMenuEl.value.addEventListener('transitionend', _event = (ev) => {
-        ev.stopPropagation()
-        MainMenuEl.value.removeEventListener('transitionend', _event, { capture: false })
-        currentContent.value = nav
-        let _time = Date.now()
-        let __event = null;
-        contentEl.value.addEventListener('transitionend', __event = (ev) => {
-            ev.stopPropagation()
-            if (Date.now() - _time < 500) {
-                return
-            }
-            contentEl.value.removeEventListener('transitionend', __event, { capture: false })
-            containerEl.value.dataset.type = ''
-            isInAnimation = false
-
-        }, { capture: false })
-    }, { capture: false })
-}
-
-// 监听query变化
-const onQueryChange = (to, from) => {
-    if (isInAnimation) {
-        return
-    }
-    if (!from) {
-        return
-    }
-
-    const toContent = getQueryContent(to)
-    const fromContent = getQueryContent(from)
-
-    if (toContent === fromContent || route.path !== '/') {
-        return
-    }
-
-    if (AVAILABLE_CONTENT.includes(toContent)) {
-        onNavClick(toContent)
-    }
-}
 
 
 const onBeforeEnter = (el) => {
