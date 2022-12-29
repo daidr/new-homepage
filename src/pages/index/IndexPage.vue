@@ -218,7 +218,7 @@ const onAfterLeave = (el) => {
                 }
 
                 &:hover,
-                &.active {
+                &.router-link-exact-active {
                     @apply px-3;
 
                     &::before {
@@ -236,7 +236,7 @@ const onAfterLeave = (el) => {
                     }
                 }
 
-                &.active {
+                &.router-link-exact-active {
                     @apply pointer-events-none;
                 }
             }
