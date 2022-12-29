@@ -135,7 +135,7 @@ const onAfterLeave = (el) => {
                 @apply relative;
                 @apply text-primary/70 font-semibold text-lg;
                 @apply cursor-pointer z-0;
-                @apply transition-all;
+                @apply transition-all duration-300;
                 @apply flex items-center;
 
                 svg {
