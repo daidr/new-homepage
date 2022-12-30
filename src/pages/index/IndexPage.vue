@@ -52,20 +52,19 @@ const onAfterEnter = (el) => {
         ev.stopPropagation()
         MainMenuEl.value.removeEventListener('transitionend', _event)
 
-        setTimeout(() => {
-            el.style.transitionDuration = '0ms'
-            contentEl.value.style.transitionDuration = '0ms'
-            el.style.transitionDelay = '0ms'
-            contentEl.value.style.transitionDelay = '0ms'
 
-            el.style.setProperty('--tw-rotate-y', '')
-            contentEl.value.style.setProperty('--tw-rotate-y', '')
-            forceReflow()
-            el.style.transitionDuration = ''
-            contentEl.value.style.transitionDuration = ''
-            el.style.transitionDelay = ''
-            contentEl.value.style.transitionDelay = ''
-        }, 0)
+        el.style.transitionDuration = '0ms'
+        contentEl.value.style.transitionDuration = '0ms'
+        el.style.transitionDelay = '0ms'
+        contentEl.value.style.transitionDelay = '0ms'
+
+        el.style.setProperty('--tw-rotate-y', '')
+        contentEl.value.style.setProperty('--tw-rotate-y', '')
+        forceReflow()
+        el.style.transitionDuration = ''
+        contentEl.value.style.transitionDuration = ''
+        el.style.transitionDelay = ''
+        contentEl.value.style.transitionDelay = ''
     })
 }
 
