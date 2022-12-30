@@ -81,7 +81,7 @@ const onAfterLeave = (el) => {
     <div class="transition-page-wrapper">
         <div ref="containerEl" class="index-page-container">
             <div ref="MainMenuEl" class="main-menu-wrapper">
-                <RouterLink to="/me" class="menu-item">
+                <RouterLink to="/" class="menu-item">
                     <i-icon-park-outline-bear />
                     我
                 </RouterLink>
