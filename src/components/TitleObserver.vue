@@ -3,7 +3,6 @@ import { CONFIG } from '@/config/base';
 import { useRouter } from 'vue-router';
 
 const router = useRouter()
-
 router.afterEach((to, from, failure) => {
     if (!failure) {
         if (to.meta.pageTitle) {
@@ -14,3 +13,5 @@ router.afterEach((to, from, failure) => {
     }
 })
 </script>
+
+<template></template>
