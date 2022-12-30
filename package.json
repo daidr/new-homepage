@@ -16,7 +16,6 @@
     "@iconify-json/uil": "^1.1.2",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vueuse/core": "^9.9.0",
-    "pinia": "^2.0.28",
     "rollup-plugin-visualizer": "^5.8.3",
     "sass": "^1.57.1",
     "unplugin-icons": "^0.14.15",
