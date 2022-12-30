@@ -22,6 +22,8 @@
     "unplugin-icons": "^0.14.15",
     "unplugin-vue-components": "^0.22.12",
     "vite": "^4.0.3",
+    "vite-plugin-inspect": "^0.7.11",
+    "vite-plugin-vue-inspector": "^2.0.4",
     "vite-plugin-windicss": "^1.8.10",
     "vue-router": "4",
     "windicss": "^3.5.6"
