@@ -3,6 +3,7 @@ import { onMounted, ref, watch } from 'vue';
 import { RouterView } from 'vue-router';
 import Footer from './components/Footer.vue';
 import RouterTransition from './components/RouterTransition.vue';
+import { forceReflow } from './utils/_';
 
 let currentThemeColor = null
 const initThemeColor = () => {
@@ -12,6 +13,7 @@ const initThemeColor = () => {
   const randomThemeIndex = Math.floor(Math.random() * 8) + 1
   document.body.classList.add(`theme-${randomThemeIndex}`)
   currentThemeColor = randomThemeIndex
+  forceReflow()
   refreshThemeColor()
 }
 

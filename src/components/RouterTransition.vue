@@ -1,4 +1,5 @@
 <script setup>
+import { forceReflow } from '@/utils/_';
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -206,10 +207,6 @@ const writeBound = (el, boundObj) => {
     const _style = getComputedStyle(el);
     boundObj.br = parseFloat(_style.borderRadius.replace("px", ""));
     boundObj.t = _style.transform;
-}
-
-const forceReflow = () => {
-    return document.body.offsetHeight;
 }
 
 const fromWrapperStyle = reactive({

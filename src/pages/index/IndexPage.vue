@@ -1,9 +1,6 @@
 <script setup>
+import { forceReflow } from '@/utils/_';
 import { ref } from 'vue';
-
-const reflow = () => {
-    return document.body.offsetHeight
-}
 
 const containerEl = ref()
 const contentEl = ref()
@@ -14,7 +11,7 @@ const onBeforeEnter = (el) => {
     containerEl.value.dataset.type = 'spilt'
     el.style.transitionDuration = '0ms'
     el.style.setProperty('--tw-rotate-y', '180deg')
-    reflow()
+    forceReflow()
     el.style.transitionDuration = ''
 }
 
@@ -63,7 +60,7 @@ const onAfterEnter = (el) => {
 
             el.style.setProperty('--tw-rotate-y', '')
             contentEl.value.style.setProperty('--tw-rotate-y', '')
-            reflow()
+            forceReflow()
             el.style.transitionDuration = ''
             contentEl.value.style.transitionDuration = ''
             el.style.transitionDelay = ''
@@ -75,7 +72,7 @@ const onAfterEnter = (el) => {
 const onAfterLeave = (el) => {
     el.style.transitionDuration = '0ms'
     el.style.opacity = 0
-    reflow()
+    forceReflow()
     el.style.transitionDuration = ''
 }
 </script>

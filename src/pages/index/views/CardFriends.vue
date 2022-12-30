@@ -1,19 +1,11 @@
 <script setup>
 import LazyImage from '@/components/LazyImage.vue';
 import { FriendsList } from '@/config/friends.js';
+import { shuffle } from '@/utils/_';
 import { ref } from 'vue';
 import CardWrapper from './CardWrapper.vue';
 
 // 打乱 FriendsList
-const shuffle = (arr) => {
-    const newArr = [...arr];
-    for (let i = newArr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
-    }
-    return newArr;
-};
-
 const FriendsListShuffled = shuffle(FriendsList).slice(0, 30);
 
 const showTopShadow = ref(false);
