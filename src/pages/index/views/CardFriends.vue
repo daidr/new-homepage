@@ -6,7 +6,7 @@ import { ref } from 'vue';
 import CardWrapper from './CardWrapper.vue';
 
 // 打乱 FriendsList
-const FriendsListShuffled = shuffle(FriendsList).slice(0, 30);
+const FriendsListShuffled = shuffle(FriendsList);
 
 const showTopShadow = ref(false);
 const showBottomShadow = ref(true);
