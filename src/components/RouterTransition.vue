@@ -120,7 +120,7 @@ const fromAnimation = (el, fromBound, selfBound, clear) => {
         // 监听动画结束
         let _event = null;
         el.addEventListener('transitionend', _event = (ev) => {
-            if (ev.target != el) return;
+            if (ev.target != el && ev.propertyName !== 'transform') return;
             el.removeEventListener('transitionend', _event, { capture: false });
             // 重置 style
             el.style.opacity = "";
@@ -152,7 +152,7 @@ const toAnimation = (el, toBound, selfBound, clear) => {
         // 监听动画结束
         let _event = null;
         el.addEventListener('transitionend', _event = (ev) => {
-            if (ev.target != el) return;
+            if (ev.target != el && ev.propertyName !== 'transform') return;
             // 移除监听
             el.removeEventListener('transitionend', _event);
             // 重置 style
@@ -295,7 +295,7 @@ const onEnter = (el, done) => {
     // }, 1310);
     let _event = null;
     el.addEventListener('transitionend', _event = (e) => {
-        if (e.target === el) {
+        if (e.target === el && e.propertyName === 'transform') {
             el.removeEventListener('transitionend', _event, { capture: false });
             done();
         }
@@ -349,7 +349,7 @@ const onLeave = (el, done) => {
 
     let _event = null;
     el.addEventListener('transitionend', _event = (e) => {
-        if (e.target === el) {
+        if (e.target === el && e.propertyName === 'transform') {
             el.removeEventListener('transitionend', _event, { capture: false });
             done();
         }
