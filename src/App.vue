@@ -3,6 +3,7 @@ import { onMounted, ref, watch } from 'vue';
 import { RouterView } from 'vue-router';
 import Footer from './components/Footer.vue';
 import RouterTransition from './components/RouterTransition.vue';
+import TitleObserver from './components/TitleObserver.vue';
 import { forceReflow } from './utils/_';
 
 let currentThemeColor = null
@@ -39,6 +40,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <TitleObserver />
   <div class="main-wrapper">
     <RouterView v-slot="{ Component }">
       <RouterTransition>
@@ -60,9 +62,8 @@ onMounted(() => {
       </details>
 
     </div>
+    <Footer />
   </div>
-
-  <Footer />
 </template>
 
 <style scoped lang="scss">
