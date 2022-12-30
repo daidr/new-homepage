@@ -121,15 +121,15 @@ const fromAnimation = (el, fromBound, selfBound, clear) => {
         // 监听动画结束
         let _event = null;
         el.addEventListener('transitionend', _event = (ev) => {
-            if (ev.target != el && ev.propertyName !== 'transform') return;
-            el.removeEventListener('transitionend', _event, { capture: false });
+            if (ev.target != el || ev.propertyName !== 'transform') return;
+            el.removeEventListener('transitionend', _event);
             // 重置 style
             el.style.opacity = "";
             SlotEl.value.classList.remove('transition-router');
             SlotEl.value.style.transitionDuration = "";
             SlotEl.value.style.willChange = "";
             toggleDecoration(true);
-        }, { capture: false });
+        });
     }
 
 }
@@ -153,7 +153,7 @@ const toAnimation = (el, toBound, selfBound, clear) => {
         // 监听动画结束
         let _event = null;
         el.addEventListener('transitionend', _event = (ev) => {
-            if (ev.target != el && ev.propertyName !== 'transform') return;
+            if (ev.target != el || ev.propertyName !== 'transform') return;
             // 移除监听
             el.removeEventListener('transitionend', _event);
             // 重置 style
@@ -168,7 +168,7 @@ const toAnimation = (el, toBound, selfBound, clear) => {
             el.style.setProperty("--tw-translate-y", "");
             el.style.setProperty("--tw-scale-x", "");
             el.style.setProperty("--tw-scale-y", "");
-        }, { capture: false });
+        });
     }
 }
 
@@ -291,12 +291,12 @@ const onEnter = (el, done) => {
     //     done();
     // }, 1310);
     let _event = null;
-    el.addEventListener('transitionend', _event = (e) => {
-        if (e.target === el && e.propertyName === 'transform') {
-            el.removeEventListener('transitionend', _event, { capture: false });
+    el.addEventListener('transitionend', _event = (ev) => {
+        if (ev.target === el && ev.propertyName === 'transform') {
+            el.removeEventListener('transitionend', _event);
             done();
         }
-    }, { capture: false })
+    })
 
 }
 
@@ -345,12 +345,12 @@ const onLeave = (el, done) => {
     }, 10)
 
     let _event = null;
-    el.addEventListener('transitionend', _event = (e) => {
-        if (e.target === el && e.propertyName === 'transform') {
-            el.removeEventListener('transitionend', _event, { capture: false });
+    el.addEventListener('transitionend', _event = (ev) => {
+        if (ev.target === el && ev.propertyName === 'transform') {
+            el.removeEventListener('transitionend', _event);
             done();
         }
-    }, { capture: false })
+    })
 
     // setTimeout(() => {
     //     done();

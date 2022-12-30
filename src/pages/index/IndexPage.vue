@@ -18,24 +18,24 @@ const onBeforeEnter = (el) => {
 const onEnter = (el, done) => {
     let _event = null;
     MainMenuEl.value.addEventListener('transitionend', _event = (ev) => {
-        if (ev.target != MainMenuEl.value && ev.propertyName !== 'transform') return;
+        if (ev.target != MainMenuEl.value || ev.propertyName !== 'transform') return;
         ev.stopPropagation()
-        MainMenuEl.value.removeEventListener('transitionend', _event, { capture: false })
+        MainMenuEl.value.removeEventListener('transitionend', _event)
 
         contentEl.value.style.setProperty('--tw-rotate-y', '180deg')
         let __event = null;
 
         let _time = Date.now()
         contentEl.value.addEventListener('transitionend', __event = (ev) => {
-            if (ev.target != contentEl.value && ev.propertyName !== 'transform') return;
+            if (ev.target != contentEl.value || ev.propertyName !== 'transform') return;
             ev.stopPropagation()
             if (Date.now() - _time < 500) {
                 return
             }
-            contentEl.value.removeEventListener('transitionend', __event, { capture: false })
+            contentEl.value.removeEventListener('transitionend', __event)
             done()
-        }, { capture: false })
-    }, { capture: false })
+        })
+    })
 }
 
 const onLeave = (el, done) => {
@@ -48,9 +48,9 @@ const onAfterEnter = (el) => {
     containerEl.value.dataset.type = ''
     let _event = null;
     MainMenuEl.value.addEventListener('transitionend', _event = (ev) => {
-        if (ev.target != MainMenuEl.value && ev.propertyName !== 'transform') return;
+        if (ev.target != MainMenuEl.value || ev.propertyName !== 'transform') return;
         ev.stopPropagation()
-        MainMenuEl.value.removeEventListener('transitionend', _event, { capture: false })
+        MainMenuEl.value.removeEventListener('transitionend', _event)
 
         setTimeout(() => {
             el.style.transitionDuration = '0ms'
@@ -66,7 +66,7 @@ const onAfterEnter = (el) => {
             el.style.transitionDelay = ''
             contentEl.value.style.transitionDelay = ''
         }, 0)
-    }, { capture: false })
+    })
 }
 
 const onAfterLeave = (el) => {
