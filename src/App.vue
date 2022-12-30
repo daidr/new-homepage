@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { RouterView } from 'vue-router';
 import Footer from './components/Footer.vue';
 import RouterTransition from './components/RouterTransition.vue';
@@ -31,7 +31,9 @@ watch(() => primaryColorLight.value, (value) => {
   setThemeColor(`rgb(${value.trim()})`)
 }, { immediate: true })
 
-initThemeColor()
+onMounted(() => {
+  initThemeColor()
+})
 </script>
 
 <template>
@@ -71,11 +73,13 @@ initThemeColor()
 }
 
 .debug {
-  @apply fixed bottom-0 right-0 z-99999;
+  @apply fixed top-0 left-0 z-999;
   @apply transform-gpu translate-z-300vh;
+  @apply bg-primary-light;
 
   .details {
     @apply flex flex-col;
+    @apply bg-primary-light;
   }
 
   .links {
