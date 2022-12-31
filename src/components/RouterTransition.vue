@@ -131,8 +131,9 @@ const fromAnimation = (el, fromBound, selfBound, clear) => {
             SlotEl.value.classList.remove('transition-router');
             SlotEl.value.style.transitionDuration = "";
             SlotEl.value.style.willChange = "";
-            toggleDecoration(true);
             enableTransition.value = true;
+
+            toggleDecoration(true);
         });
     }
 
@@ -362,7 +363,10 @@ const onLeave = (el, done) => {
 }
 
 const onAfterLeave = (el) => {
-    toggleDecoration(true);
+    if (enableTransition.value) {
+        toggleDecoration(true);
+    }
+
     // TODO: 不实现也没啥问题，因为动画结束后元素已经被移除了
 }
 </script>
