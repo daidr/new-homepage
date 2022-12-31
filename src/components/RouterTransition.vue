@@ -70,7 +70,9 @@ router.afterEach((to, from) => {
         return;
     }
     if (firstTime) {
+        enableTransition.value = false;
         firstTime = false;
+        toggleDecoration(false);
     }
     if (!enableTransition.value) {
         const delta = Date.now() - startLoadingTime;
@@ -132,7 +134,6 @@ const fromAnimation = (el, fromBound, selfBound, clear) => {
             SlotEl.value.style.transitionDuration = "";
             SlotEl.value.style.willChange = "";
             enableTransition.value = true;
-
             toggleDecoration(true);
         });
     }
@@ -234,7 +235,9 @@ const toWrapperStyle = reactive({
 });
 
 const onBeforeEnter = (el) => {
-    toggleDecoration(false);
+    if (enableTransition.value) {
+        toggleDecoration(false);
+    }
     // 克隆
     let toWrapper = el.cloneNode(true);
     toWrapper.style.transitionDuration = '0s'
