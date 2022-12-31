@@ -17,11 +17,16 @@ const getTransitionContainer = (el) => {
     if (el.classList.contains(containerClass)) {
         return el;
     }
-    // 否则，遍历el的子元素，找到transition-page-wrapper
+    // 否则，遍历el的所有层级的子元素，找到transition-page-wrapper
     for (let i = 0; i < el.children.length; i++) {
         const child = el.children[i];
-        if (child.classList.contains(containerClass)) {
+        if (child.classList && child.classList.contains(containerClass)) {
             return child;
+        } else {
+            const _child = getTransitionContainer(child);
+            if (_child != child) {
+                return _child;
+            }
         }
     }
     return el;
