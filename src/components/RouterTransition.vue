@@ -43,6 +43,7 @@ let startLoadingTime = 0;
 let _toWrapperStyle = {};
 let _fromWrapperStyle = {};
 let firstTime = true;
+let _firstTime = true;
 router.beforeEach((to, from, next) => {
     startLoadingTime = Date.now();
     enableTransition.value = true;
@@ -237,8 +238,11 @@ const toWrapperStyle = reactive({
 });
 
 const onBeforeEnter = (el) => {
-    if (enableTransition.value && !firstTime) {
+    if (enableTransition.value && !_firstTime) {
         toggleDecoration(false);
+    }
+    if(_firstTime) {
+        _firstTime = false;
     }
     // 克隆
     let toWrapper = el.cloneNode(true);
