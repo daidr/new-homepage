@@ -7,7 +7,7 @@
 <style scoped lang="scss">
 footer {
     @apply opacity-50 select-none whitespace-nowrap;
-    @apply fixed;
+    @apply fixed -z-1;
     @apply bottom-5 left-1/2;
     @apply transform-gpu -translate-x-1/2;
     @apply "text-white text-2xl md:text-4xl";
