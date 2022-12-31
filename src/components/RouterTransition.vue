@@ -72,13 +72,11 @@ router.afterEach((to, from) => {
         setTimeout(() => {
             const _loadingEl = getTransitionContainer(LoadingEl.value);
             const _slotEl = getTransitionContainer(SlotEl.value);
-
             writeBound(_loadingEl, _fromWrapperStyle);
             writeBound(_slotEl, _toWrapperStyle);
             _fromWrapperStyle.set = true;
             toAnimation(_loadingEl, _toWrapperStyle, _fromWrapperStyle, true);
             fromAnimation(_slotEl, _fromWrapperStyle, _toWrapperStyle, true);
-
         }, Math.max(1300 - delta, 0));
     }
 });
@@ -129,6 +127,7 @@ const fromAnimation = (el, fromBound, selfBound, clear) => {
             SlotEl.value.style.transitionDuration = "";
             SlotEl.value.style.willChange = "";
             toggleDecoration(true);
+            enableTransition.value = true;
         });
     }
 
