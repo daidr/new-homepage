@@ -69,10 +69,12 @@ router.afterEach((to, from) => {
     if (!firstTime && to.path == from.path) {
         return;
     }
-    if (firstTime) {
-        enableTransition.value = false;
+    if (firstTime && enableTransition.value === true) {
         firstTime = false;
-        toggleDecoration(false);
+        return;
+    }
+    if (firstTime) {
+        firstTime = false;
     }
     if (!enableTransition.value) {
         const delta = Date.now() - startLoadingTime;
@@ -235,7 +237,7 @@ const toWrapperStyle = reactive({
 });
 
 const onBeforeEnter = (el) => {
-    if (enableTransition.value) {
+    if (enableTransition.value && !firstTime) {
         toggleDecoration(false);
     }
     // 克隆
