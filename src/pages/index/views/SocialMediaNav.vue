@@ -1,5 +1,4 @@
 <script setup>
-import { reactive } from 'vue';
 import IconHome from "~icons/uil/home-alt"
 import IconRss from "~icons/uil/rss"
 import IconWeibo from "~icons/icon-park-outline/weibo"
