@@ -47,7 +47,7 @@ onMounted(() => {
         <component :is="Component" />
       </RouterTransition>
     </RouterView>
-    <div class="debug">
+    <!-- <div class="debug">
       <details>
         <summary>Debug</summary>
         <div>主题色: {{ primaryColorLight }} (<span @click="initThemeColor">刷新</span>)</div>
@@ -61,7 +61,7 @@ onMounted(() => {
         </div>
       </details>
 
-    </div>
+    </div> -->
     <Footer />
   </div>
 </template>
