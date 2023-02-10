@@ -286,7 +286,7 @@ const onEnter = (el, done) => {
 
     forceReflow();
 
-    setTimeout(() => {
+    requestAnimationFrame(() => {
         el.classList.add('transition-router');
         el.style.transitionDuration = '1300ms';
 
@@ -299,11 +299,8 @@ const onEnter = (el, done) => {
         el.style.setProperty("--tw-translate-y", "");
         el.style.setProperty("--tw-scale-x", "");
         el.style.setProperty("--tw-scale-y", "");
-    }, 10)
+    })
 
-    // setTimeout(() => {
-    //     done();
-    // }, 1310);
     let _event = null;
     el.addEventListener('transitionend', _event = (ev) => {
         if (ev.target === el && ev.propertyName === 'transform') {
@@ -345,7 +342,7 @@ const onLeave = (el, done) => {
     el.classList.add('transition-router');
     el.style.transitionDuration = '1300ms';
     el.style.willChange = "transform, border-radius, opacity";
-    setTimeout(() => {
+    requestAnimationFrame(() => {
         const d = calcDelta(toWrapperStyle, fromWrapperStyle, fromWrapperStyle.t);
         el.style.setProperty("--tw-rotate-x", "180deg");
         el.style.setProperty("--tw-rotate-z", "-180deg");
@@ -356,7 +353,7 @@ const onLeave = (el, done) => {
         const scale = (d.scaleX + d.scaleY) / 2;
         el.style.borderRadius = toWrapperStyle.br / scale + "px";
         el.style.opacity = "0";
-    }, 10)
+    })
 
     let _event = null;
     el.addEventListener('transitionend', _event = (ev) => {
@@ -365,10 +362,6 @@ const onLeave = (el, done) => {
             done();
         }
     })
-
-    // setTimeout(() => {
-    //     done();
-    // }, 1310);
 }
 
 const onAfterLeave = (el) => {
