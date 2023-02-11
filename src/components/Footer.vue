@@ -10,16 +10,16 @@ footer {
     @apply fixed -z-1;
     @apply bottom-5 left-1/2;
     @apply transform-gpu -translate-x-1/2;
-    @apply "text-white text-2xl md:text-4xl";
-    font-family: daidr-s-house !important;
+    @apply "text-white text-3xl md:text-5xl";
+    font-family: BEYNO-online !important;
 
     a {
-        font-family: daidr-s-house !important;
+        font-family: BEYNO-online !important;
         @apply relative;
 
         &::after {
             content: "";
-            @apply "absolute bottom-0 left-0 w-0 h-2px md:h-4px";
+            @apply "absolute bottom-10px left-0 w-0 h-2px md:h-4px";
             @apply rounded-full;
             @apply bg-white;
             @apply transition-all duration-400;
